@@ -12,29 +12,37 @@ let popupSubNameInput = document.querySelector('.popup__input_type_subname');
 
 /* Функция открытия попапа*/
 function openPopupWindow(){
+  /*приводим значения полей ввода в актуальное состояние*/
   popupNameInput.value = profileTitle.textContent ;
   popupSubNameInput.value = profileSubtitle.textContent;
+  /* добавление модификатора отображения попапа*/
   popupWindow.classList.add('popup_visible');
 }
 
 /* Функция закрытия попапа*/
 function closePopupWindow(){
+  /* удаление модификатора отображения попапа*/
   popupWindow.classList.remove('popup_visible');
 }
 
 /* Функция отправки формы*/
 function submitPopupWindow(evt){
+  /*отменяем вносимые стандартные значения*/
   evt.preventDefault();
+  /*приводим значения заголовков в актуальное состояние*/
   profileTitle.textContent = popupNameInput.value ;
   profileSubtitle.textContent = popupSubNameInput.value ;
-  console.log('hi!!');
+  /*закрываем все*/
   closePopupWindow();
 }
 
+/*вешаем лисенер на кнопку редактирвоания профиля*/
 profileEditButton.addEventListener('click',openPopupWindow);
 
+/*вешаем лисенер на кнопку закрытия попапа*/
 popupCloseButton.addEventListener('click',closePopupWindow);
 
+/*вешаем лисенер на отправку формы*/
 popupForm.addEventListener('submit',submitPopupWindow);
 
 
