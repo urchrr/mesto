@@ -2,8 +2,15 @@
   font-size: 42px;
   line-height: 114%;
   margin-bottom: 16px;
-  max-width: calc(70vw - 352px);
+  max-width: 544px;
 }
+
+@media screen and (max-width:1280px){
+  .profile__title{
+    max-width: calc(70vw - 352px);
+  }
+}
+
 @media screen and (max-width:1000px){
   .profile__title{
     font-size: 32px;
