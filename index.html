@@ -18,7 +18,7 @@
     <main class="content">
       <section class="profile page__section">
         <div class="profile__wrapper">
-          <img src="./images/Avatar.png" class="profile__photo" alt="Фото профиля">
+          <img src="./images/avatar.png" class="profile__photo" alt="Фото профиля">
           <div class="profile__info">
             <div class="profile__info-wrapper">
               <h1 class="profile__title page__font page__font_weight_bold page__text-overflow">Жак-Ив Кусто</h1>
@@ -37,7 +37,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Карачаевск
             </h2>
-            <button class="element__like-button page__button" type="checkbox"></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
         <article class="element">
@@ -46,7 +46,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Гора Эльбрус
             </h2>
-            <button class="element__like-button page__button" type="button" ></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
         <article class="element">
@@ -55,7 +55,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Домбай
             </h2>
-            <button class="element__like-button page__button" type="button" ></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
         <article class="element">
@@ -64,7 +64,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Гора Эльбрус
             </h2>
-            <button class="element__like-button page__button" type="button" ></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
         <article class="element">
@@ -73,7 +73,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Домбай
             </h2>
-            <button class="element__like-button page__button" type="button" ></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
         <article class="element">
@@ -82,7 +82,7 @@
             <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
               Карачаево-Черкесск
             </h2>
-            <button class="element__like-button page__button" type="button" ></button>
+            <button class="element__like-button page__button" type="button"></button>
           </div>
         </article>
       </section>
@@ -91,11 +91,13 @@
 
     <div class="popup">
       <div class="popup__window">
-        <button type="button" class="popup__close-button page__button"></button>
+      <button type="button" class="popup__close-button page__button"></button>
         <form class="popup__form" name="edit_profile">
           <h2 class="popup__heading page__font page__font_weight_headings">Редактировать профиль</h2>
-          <input class="popup__input popup__input_type_name page__font page__font_weight_normal" type="text" name="profile_name">
-          <input class="popup__input popup__input_type_subname page__font page__font_weight_normal" type="text" name="profile_subname">
+          <fieldset class="popup__fieldset">
+            <input class="popup__input popup__input_type_name page__font page__font_weight_normal" type="text" name="profile_name">
+            <input class="popup__input popup__input_type_subname page__font page__font_weight_normal" type="text" name="profile_subname">
+          </fieldset>
           <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">Сохранить</button>
         </form>
       </div>
