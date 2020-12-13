@@ -1,18 +1,12 @@
 /* Объявление переменных*/
-let popupWindow = document.querySelector('.popup');
-let popupProfileWindow = document.querySelector('.popup__profile');
-let popupElementWindow = document.querySelector('.popup__element');
-
-let elementImage = document.querySelector('.element__image');
-console.log(elementImage);
-let elementTitle = document.querySelector('.element__title');
-console.log(elementTitle);
-let elementAddButton = document.querySelector('.profile__add-element-button');
-let profileEditButton = document.querySelector('.profile__edit-button');
 let profileTitle = document.querySelector('.profile__title');
 let profileSubtitle = document.querySelector('.profile__subtitle');
+
+let popupNameInput = document.querySelector('.popup__input_type_name');
+let popupSubNameInput = document.querySelector('.popup__input_type_subname');
 let popupForm = document.querySelectorAll('.popup__form');
 let popupCloseButton = document.querySelectorAll('.popup__close-button');
+
 
 const initialCards = [
   {
@@ -39,25 +33,61 @@ const initialCards = [
       name: 'Байкал',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; 
+];
 
-/* Функция открытия попапа*/
-function openPopupProfileWindow(){
-  /*приводим значения полей ввода в актуальное состояние*/
-  popupNameInput.value = profileTitle.textContent ;
-  popupSubNameInput.value = profileSubtitle.textContent;
-  /* добавление модификатора отображения попапа*/
-  popupProfileWindow.classList.add('popup_visible');
+/*добавление слушателя на страницу*/
+document.querySelector('.page').addEventListener('click',elementListener);
+/*обработчик слушателя страницы*/
+function elementListener(evt){
+  let tar = evt.target;
+  console.log(tar);console.log(tar.classList);
+  /* кнопка удаления карточки*/
+  if(tar.classList.contains('element__delete-button')){
+    console.log('tar delete');
+    /* поиск в дом родителя - карточку и удаление элемента*/
+    tar.closest('.element').remove();
+  }
+  /* просмотр содержимого карчтоки*/
+  else if (tar.classList.contains('element__image')){
+    console.log('tar image');
+  }
+  /* кнопка лайка на карточке*/
+  else if (tar.classList.contains('element__like-button')){
+    console.log('tar like');
+  }
+  /* кнопка добавления карточки*/
+  else if (tar.classList.contains('profile__add-element-button')){
+    console.log('tar add elem');
+    /* добавление модификатора отображения попапа*/
+    document.querySelector('.popup__element').classList.add('popup_visible');
+  }
+  /* кнопка редактирования профиля*/
+  else if (tar.classList.contains('profile__edit-button')){
+    console.log('tar edit profile');
+    /*приводим значения полей ввода профиля в актуальное состояние*/
+    popupNameInput.value = profileTitle.textContent ;
+    popupSubNameInput.value = profileSubtitle.textContent;
+    /* добавление модификатора отображения попапа*/
+    document.querySelector('.popup__profile').classList.add('popup_visible');
+  }
 }
 
-function openPopupElementWindow(){
-  popupElementWindow.classList.add('popup_visible');
-}
 /* Функция закрытия попапа*/
 function closePopupWindow(evt){
-  evt.target.closest('.popup').classList.remove('popup_visible');
+  let tar = evt.target;
   /* удаление модификатора отображения попапа*/
-  /* popupWindow.classList.remove('popup_visible');*/
+  tar.closest('.popup').classList.remove('popup_visible');
+}
+
+
+/* Функция рендера карточки*/
+function addElement(img, title){
+  let elements = document.querySelector('.elements');
+  let elementTemplate = document.querySelector('#element').content;
+  let newElement = elementTemplate.cloneNode(true);
+  newElement.querySelector('.element__image').src = img;
+  newElement.querySelector('.element__title').textContent = title;
+  elements.append(newElement);
 }
 
 /* Функция отправки формы*/
@@ -65,50 +95,40 @@ function submitPopupWindow(evt){
   /*отменяем вносимые стандартные значения*/
   evt.preventDefault();
   console.log('do');
-  /*приводим значения заголовков в актуальное состояние*/
+
   if(evt.target.closest(".popup__element")){
     console.log('target element');
     let popupElemTitleInput = document.querySelector('.popup__input_type_elem-title');
     let popupElemImageInput = document.querySelector('.popup__input_type_elem-image');
-    console.log(elementTitle);
-    elementTitle.textContent = popupElemTitleInput.value ;
-    elementImage.src = popupElemImageInput.value ;
+    addElement(popupElemImageInput.value, popupElemTitleInput.value);
   }
   else if(evt.target.closest(".popup__profile")){
     console.log('target profile');
-    let popupNameInput = document.querySelector('.popup__input_type_name');
-    let popupSubNameInput = document.querySelector('.popup__input_type_subname');
-
+    /*приводим значения заголовков в актуальное состояние*/
     profileTitle.textContent = popupNameInput.value ;
     profileSubtitle.textContent = popupSubNameInput.value ;
   }
 
   /*закрываем все*/
-  closePopupWindow();
+  closePopupWindow(evt);
 }
 
-elementAddButton.addEventListener('click', openPopupElementWindow);
 /*вешаем лисенер на кнопку редактирвоания профиля*/
-profileEditButton.addEventListener('click',openPopupProfileWindow);
+
 
 /*вешаем лисенер на кнопку закрытия попапа*/
 popupCloseButton.forEach( elem => {elem.addEventListener('click',closePopupWindow)});
 
 /*вешаем лисенер на отправку формы*/
 popupForm.forEach(elem=>{elem.addEventListener('submit',submitPopupWindow)});
-const elements = document.querySelector('.elements');
-function addElement(img, title){
-  const elementTemplate = document.querySelector('#element').content;
-  const newElement = elementTemplate.cloneNode(true);
-  newElement.querySelector('.element__image').src = img;
-  newElement.querySelector('.element__title').textContent = title;
-  elements.append(newElement);
-}
+
+
+
+
 
 initialCards.forEach(elem => console.log(elem.name));
 initialCards.forEach(elem => addElement(elem.link,elem.name));
 
-console.log(elements);
 
 
 
