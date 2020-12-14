@@ -1,11 +1,17 @@
 /* Объявление переменных*/
+/* Текст профиля*/
 let profileTitle = document.querySelector('.profile__title');
 let profileSubtitle = document.querySelector('.profile__subtitle');
-
+/* Инпуты попапа профиля*/
 let popupNameInput = document.querySelector('.popup__input_type_name');
 let popupSubNameInput = document.querySelector('.popup__input_type_subname');
+/* Инпуты попапа карточки*/
+let popupElemTitleInput = document.querySelector('.popup__input_type_elem-title');
+let popupElemImageInput = document.querySelector('.popup__input_type_elem-image');
+
 let popupForm = document.querySelectorAll('.popup__form');
 let popupCloseButton = document.querySelectorAll('.popup__close-button');
+
 
 
 const initialCards = [
@@ -61,6 +67,8 @@ function elementListener(evt){
   /* кнопка добавления карточки*/
   else if (tar.classList.contains('profile__add-element-button')){
     console.log('tar add elem');
+    popupElemTitleInput.value = '';
+    popupElemImageInput.value = '';
     /* добавление модификатора отображения попапа*/
     document.querySelector('.popup__element').classList.add('popup_visible');
   }
@@ -111,12 +119,12 @@ function submitPopupWindow(evt){
   /*отменяем вносимые стандартные значения*/
   evt.preventDefault();
   console.log('do');
+  /*оправка формы карточки*/
   if(evt.target.closest(".popup__element")){
     console.log('target element');
-    let popupElemTitleInput = document.querySelector('.popup__input_type_elem-title');
-    let popupElemImageInput = document.querySelector('.popup__input_type_elem-image');
     addElement(popupElemImageInput.value, popupElemTitleInput.value);
   }
+  /*отправка формы профиля*/
   else if(evt.target.closest(".popup__profile")){
     console.log('target profile');
     /*приводим значения заголовков в актуальное состояние*/
