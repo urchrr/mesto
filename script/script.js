@@ -37,6 +37,7 @@ const initialCards = [
 
 /*добавление слушателя на страницу*/
 document.querySelector('.page').addEventListener('click',elementListener);
+
 /*обработчик слушателя страницы*/
 function elementListener(evt){
   let tar = evt.target;
@@ -50,10 +51,12 @@ function elementListener(evt){
   /* просмотр содержимого карчтоки*/
   else if (tar.classList.contains('element__image')){
     console.log('tar image');
+    showElementPopup(tar.closest('.element'));
   }
   /* кнопка лайка на карточке*/
   else if (tar.classList.contains('element__like-button')){
     console.log('tar like');
+    tar.closest('.element__like-button').classList.toggle('element__like-button_active');
   }
   /* кнопка добавления карточки*/
   else if (tar.classList.contains('profile__add-element-button')){
@@ -72,6 +75,19 @@ function elementListener(evt){
   }
 }
 
+/*Функция рендеринга попапа карточки*/
+function showElementPopup(element){
+  console.log('func show')
+  let popup = document.querySelector('.popup__element-view');
+  let elementImage = element.querySelector('.element__image');
+  let elementTitle = element.querySelector('.element__title');
+  let popupImage = popup.querySelector('.popup__image');
+  let popupFigure = popup.querySelector('.popup__figure');
+  popupImage.src = elementImage.src;
+  popupImage.alt = elementTitle.textContent;
+  popupFigure.textContent = elementTitle.textContent;
+  popup.classList.add('popup_visible');
+}
 /* Функция закрытия попапа*/
 function closePopupWindow(evt){
   let tar = evt.target;
@@ -82,12 +98,12 @@ function closePopupWindow(evt){
 
 /* Функция рендера карточки*/
 function addElement(img, title){
-  let elements = document.querySelector('.elements');
+  const elements = document.querySelector('.elements');
   let elementTemplate = document.querySelector('#element').content;
   let newElement = elementTemplate.cloneNode(true);
   newElement.querySelector('.element__image').src = img;
   newElement.querySelector('.element__title').textContent = title;
-  elements.append(newElement);
+  elements.prepend(newElement);
 }
 
 /* Функция отправки формы*/
@@ -95,7 +111,6 @@ function submitPopupWindow(evt){
   /*отменяем вносимые стандартные значения*/
   evt.preventDefault();
   console.log('do');
-
   if(evt.target.closest(".popup__element")){
     console.log('target element');
     let popupElemTitleInput = document.querySelector('.popup__input_type_elem-title');
@@ -108,25 +123,17 @@ function submitPopupWindow(evt){
     profileTitle.textContent = popupNameInput.value ;
     profileSubtitle.textContent = popupSubNameInput.value ;
   }
-
   /*закрываем все*/
   closePopupWindow(evt);
 }
 
-/*вешаем лисенер на кнопку редактирвоания профиля*/
-
-
-/*вешаем лисенер на кнопку закрытия попапа*/
+/*вешаем лисенер на кнопки закрытия попапа*/
 popupCloseButton.forEach( elem => {elem.addEventListener('click',closePopupWindow)});
 
 /*вешаем лисенер на отправку формы*/
 popupForm.forEach(elem=>{elem.addEventListener('submit',submitPopupWindow)});
 
-
-
-
-
-initialCards.forEach(elem => console.log(elem.name));
+/*рендер заготовленных карточек*/
 initialCards.forEach(elem => addElement(elem.link,elem.name));
 
 
