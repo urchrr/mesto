@@ -32,6 +32,20 @@ function removeElement(element){
   element.remove();
 }
 
+//функция открытия попапа
+function openPopupWindow(popup){
+  popup.classList.add('popup_visible');
+}
+// функция закрытия попапа
+function closePopupWindow(popup){
+  popup.classList.remove('popup_visible');
+}
+/* Обработчик Функции закрытия попапа*/
+function handlerClosePopupWindow(evt){
+  /* удаление модификатора отображения попапа*/
+  closePopupWindow(evt.target.closest('.popup'))
+}
+
 //функция отображения попапа редактирования профиля
 function showProfileEditWindow(popup){
   /*приводим значения полей ввода профиля в актуальное состояние*/
@@ -54,21 +68,6 @@ function toggleLikeButton(button){
   button.classList.toggle('element__like-button_active');
 }
 
-//функция открытия попапа
-function openPopupWindow(popup){
-  popup.classList.add('popup_visible');
-}
-// функция закрытия попапа
-function closePopupWindow(popup){
-  popup.classList.remove('popup_visible');
-}
-/* Функция закрытия попапа*/
-function handlerClosePopupWindow(evt){
-  /* удаление модификатора отображения попапа*/
-  closePopupWindow(evt.target.closest('.popup'))
-}
-
-
 /*Функция рендеринга попапа карточки*/
 function showElementPopup(element){
   const elementImage = element.querySelector('.element__image');
@@ -88,7 +87,7 @@ function getElementCard(imgLink, title, template){
     removeElement(evt.target.closest('.element'));
   });
   newElement.querySelector('.element__image').addEventListener('click', (evt) => showElementPopup(evt.target.closest('.element')));
-  newElement.querySelector('.element__like-button').addEventListener('click', (evt) => toggleLikeButton(evt.target)); 
+  newElement.querySelector('.element__like-button').addEventListener('click', (evt) => toggleLikeButton(evt.target));
   return newElement;
 }
 
@@ -112,21 +111,27 @@ function submitEditPopupWindow(Title,Subtitle, NameInput,SubnameInput,popup){
   closePopupWindow(popup);
 }
 
+//
+//
+//
 /*вешаем лисенер на кнопки закрытия попапа*/
 popupCloseButtons.forEach( elem => {elem.addEventListener('click',handlerClosePopupWindow)});
-
-/*рендер заготовленных карточек*/
-initialCards.forEach(elem => addElement(elem.link,elem.name,elementTemplate));
-
 
 profileEditButton.addEventListener('click', () => showProfileEditWindow(popupProfileEdit));
 profileAddElementButton.addEventListener('click', () => showProfileEditWindow(popupAddElement));
 
 formEditProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  submitEditPopupWindow(profileTitle,profileSubtitle,popupNameInput,popupSubNameInput);
+  submitEditPopupWindow(profileTitle,profileSubtitle,popupNameInput,popupSubNameInput, popupProfileEdit);
 });
 
-formAddElement.addEventListener('submit',(evt)=>{
-  submitAddPopupWindow(popupElemImageInput,popupElemTitleInput,popupAddElement)
+formAddElement.addEventListener('submit', (evt)=>{
+  evt.preventDefault();
+  submitAddPopupWindow(popupElemImageInput,popupElemTitleInput,elementTemplate, popupAddElement)
 });
+
+//
+//
+//
+/*рендер заготовленных карточек*/
+initialCards.forEach(elem => addElement(elem.link,elem.name,elementTemplate));
