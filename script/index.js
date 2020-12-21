@@ -114,11 +114,10 @@ function handleProfileAddButton() {
 
 function handleSubmitAddPopupWindow(evt) {
   evt.preventDefault();
-  console.log();
   addElement(
     elements,
     getElementCard(
-      { name: popupElemTitleInput.textContent, link: popupElemImageInput.src },
+      { name: popupElemTitleInput.value, link: popupElemImageInput.value },
       elementTemplate
     )
   );
