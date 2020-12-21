@@ -1,64 +1,73 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="проектная работа 4">
-  <meta name="author" content="urchrr">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="проектная работа 4" />
+  <meta name="author" content="urchrr" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="./pages/index.css">
+  <link rel="stylesheet" href="./pages/index.css" />
   <title>Место</title>
 </head>
 
 <body>
   <div class="page">
     <header class="header page__section">
-      <img class="header__logo" src="images/logo.svg" alt="Логотип 'Место'">
+      <img class="header__logo" src="images/logo.svg" alt="Логотип 'Место'" />
     </header>
 
     <main class="content">
       <section class="profile page__section">
         <div class="profile__wrapper">
-          <img src="./images/avatar.png" class="profile__photo" alt="Фото профиля">
+          <img src="./images/avatar.png" class="profile__photo" alt="Фото профиля" />
           <div class="profile__info">
             <div class="profile__info-wrapper">
-              <h1 class="profile__title page__font page__font_weight_bold page__text-overflow">Жак-Ив Кусто</h1>
-              <button class="profile__edit-button page__button" type="button" aria-label="Редактирование профиля"></button>
+              <h1 class="profile__title page__font page__font_weight_bold page__text-overflow">
+                Жак-Ив Кусто
+              </h1>
+              <button class="profile__edit-button page__button" type="button"
+                aria-label="Редактирование профиля"></button>
             </div>
-            <p class="profile__subtitle page__font page__font_weight_normal page__text-overflow">Исследователь океана</p>
+            <p class="profile__subtitle page__font page__font_weight_normal page__text-overflow">
+              Исследователь океана
+            </p>
           </div>
         </div>
-        <button class="profile__add-element-button page__button" type="button" aria-label="Добавление карточки"></button>
+        <button class="profile__add-element-button page__button" type="button"
+          aria-label="Добавление карточки"></button>
       </section>
 
       <section class="elements page__section">
-        <template id='element'>
+        <template id="element">
           <article class="element">
             <button class="element__delete-button page__button" type="button"></button>
-            <img class="element__image" src="#" alt="Фото карточки-места">
+            <img class="element__image" src="#" alt="Фото карточки-места" />
             <div class="element__info">
-              <h2 class="element__title page__font page__font_weight_headings page__text-overflow">
-              </h2>
+              <h2 class="element__title page__font page__font_weight_headings page__text-overflow"></h2>
               <button class="element__like-button page__button" type="button"></button>
             </div>
           </article>
         </template>
-
-
       </section>
-
     </main>
 
     <div class="popup popup_profile">
       <div class="popup__window">
         <button type="button" class="popup__close-button page__button"></button>
         <form class="popup__form" name="edit_profile" id="edit_profile">
-          <h2 class="popup__heading page__font page__font_weight_headings">Редактировать профиль</h2>
+          <h2 class="popup__heading page__font page__font_weight_headings">
+            Редактировать профиль
+          </h2>
           <fieldset class="popup__fieldset">
-            <input class="popup__input popup__input_type_name page__font page__font_weight_normal" type="text" name="profile_name">
-            <input class="popup__input popup__input_type_subname page__font page__font_weight_normal" type="text" name="profile_subname">
+            <input class="popup__input popup__input_type_name page__font page__font_weight_normal" type="text"
+              name="profile_name" />
+            <input class="popup__input popup__input_type_subname page__font page__font_weight_normal" type="text"
+              name="profile_subname" />
           </fieldset>
-          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">Сохранить</button>
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
@@ -67,12 +76,18 @@
       <div class="popup__window">
         <button type="button" class="popup__close-button page__button"></button>
         <form class="popup__form" name="add_element" id="add_element">
-          <h2 class="popup__heading page__font page__font_weight_headings">Новое место</h2>
+          <h2 class="popup__heading page__font page__font_weight_headings">
+            Новое место
+          </h2>
           <fieldset class="popup__fieldset">
-            <input class="popup__input popup__input_type_elem-title page__font page__font_weight_normal" type="text" name="element_title" placeholder="Название">
-            <input class="popup__input popup__input_type_elem-image page__font page__font_weight_normal" type="text" name="element_photo" placeholder="Ссылка на картинку">
+            <input class="popup__input popup__input_type_elem-title page__font page__font_weight_normal" type="text"
+              name="element_title" placeholder="Название" />
+            <input class="popup__input popup__input_type_elem-image page__font page__font_weight_normal" type="text"
+              name="element_photo" placeholder="Ссылка на картинку" />
           </fieldset>
-          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">Создать</button>
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">
+            Создать
+          </button>
         </form>
       </div>
     </div>
@@ -80,17 +95,19 @@
     <div class="popup popup_element-view">
       <figure class="popup__wrapper">
         <button type="button" class="popup__close-button page__button"></button>
-        <img class="popup__image" src="#" alt="Изображение">
+        <img class="popup__image" src="#" alt="Изображение" />
         <figcaption class="popup__figure page__font page__font_weight_normal"></figcaption>
       </figure>
     </div>
 
     <footer class="footer page__section">
-      <p class="footer__text page__font page__font_weight_normal">&copy; 2020 Mesto Russia</p>
+      <p class="footer__text page__font page__font_weight_normal">
+        &copy; 2020 Mesto Russia
+      </p>
     </footer>
-
   </div>
   <script src="./script/initial-cards.js"></script>
   <script src="./script/index.js"></script>
 </body>
+
 </html>
