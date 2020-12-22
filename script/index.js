@@ -49,14 +49,14 @@ function handleDeleteButton(evt) {
   evt.target.closest(".element").remove();
 }
 
-function handleImage(dataImg, dataTitle) {
-  popupImage.src = dataImg.src;
-  popupImage.alt = dataTitle.textContent;
-  popupFigure.textContent = dataTitle.textContent;
+function handleImage(imageData) {
+  popupImage.src = imageData.link;
+  popupImage.alt = imageData.name;
+  popupFigure.textContent = imageData.name;
   openPopupWindow(popupElementView);
 }
 //функция получения новой карточки
-function getElementCard(elemObj, template) {
+function getElementCard(imageData, template) {
   //склонировали шаблон в новую карточку
   const newElement = template.cloneNode(true);
   //выбираем элементы карточки
@@ -67,16 +67,16 @@ function getElementCard(elemObj, template) {
   );
   const elementLikeButton = newElement.querySelector(".element__like-button");
   //записываем источник изображения
-  elementImage.src = elemObj.link;
+  elementImage.src = imageData.link;
   //записываем alt изображения из названия карточки
-  elementImage.alt = elemObj.name;
+  elementImage.alt = imageData.name;
   //записываем название карточки
-  elementTitle.textContent = elemObj.name;
+  elementTitle.textContent = imageData.name;
   //обработчики
   elementDeleteButton.addEventListener("click", handleDeleteButton);
   //где some_data объект с данными
   elementImage.addEventListener("click", () => {
-    handleImage(elementImage, elementTitle);
+    handleImage(imageData);
   });
   elementLikeButton.addEventListener("click", handleLikeButton);
   //возвращаем готовую карточку
@@ -85,10 +85,6 @@ function getElementCard(elemObj, template) {
 /* Функция добавления карточки*/
 function addElement(container, card) {
   container.prepend(card);
-}
-//обработчики слушателей
-function handleClosePopupWindow(evt) {
-  closePopupWindow(evt.target.closest(".popup"));
 }
 
 function handleProfileEditButton() {
@@ -126,7 +122,9 @@ function handleSubmitAddPopupWindow(evt) {
 }
 //слушатели
 popupCloseButtons.forEach((elem) => {
-  elem.addEventListener("click", handleClosePopupWindow);
+  elem.addEventListener("click", (evt) =>
+    closePopupWindow(evt.target.closest(".popup"))
+  );
 });
 profileEditButton.addEventListener("click", handleProfileEditButton);
 profileAddElementButton.addEventListener("click", handleProfileAddButton);
