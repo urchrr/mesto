@@ -33,27 +33,27 @@ const elementTemplate = document.querySelector("#element").content;
 const formAddElement = document.querySelector("#add_element");
 const formEditProfile = document.querySelector("#edit_profile");
 
-function handlePopupClose(evt){
-  if(evt.target===evt.currentTarget){
+function handlePopupClose(evt) {
+  if (evt.target === evt.currentTarget) {
     closePopupWindow(evt.currentTarget);
   }
 }
 
-function handlePopupEscape(evt){
-  if (evt.key === 'Escape') {
+function handlePopupEscape(evt) {
+  if (evt.key === "Escape") {
     closePopupWindow(evt.currentTarget);
   }
 }
 //функция открытия попапа
 function openPopupWindow(popup) {
-  console.log(popup.firstElementChild)
-  popup.addEventListener('click', handlePopupClose);
-  popup.addEventListener('keydown', handlePopupEscape);
+  console.log(popup.firstElementChild);
+  popup.addEventListener("click", handlePopupClose);
+  popup.addEventListener("keydown", handlePopupEscape);
   popup.classList.add("popup_visible");
 }
 //функция закрытия попапа
 function closePopupWindow(popup) {
-  popup.removeEventListener('click', handlePopupClose);
+  popup.removeEventListener("click", handlePopupClose);
   popup.removeEventListener("keydown", handlePopupEscape);
   popup.classList.remove("popup_visible");
 }
@@ -122,7 +122,11 @@ function handleSubmitEditPopupWindow(evt) {
 }
 
 function handleProfileAddButton() {
-  setButtonState(formAddElement.elements.submit, formAddElement.checkValidity(), validationConfig)
+  setButtonState(
+    formAddElement.elements.submit,
+    formAddElement.checkValidity(),
+    validationConfig
+  );
   openPopupWindow(popupAddElement);
 }
 
