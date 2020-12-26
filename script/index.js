@@ -41,20 +41,20 @@ function handlePopupClose(evt) {
 
 function handlePopupEscape(evt) {
   if (evt.key === "Escape") {
-    closePopupWindow(evt.currentTarget);
+    closePopupWindow(document.querySelector('.popup_visible'));
   }
 }
 //функция открытия попапа
 function openPopupWindow(popup) {
   console.log(popup.firstElementChild);
   popup.addEventListener("click", handlePopupClose);
-  popup.addEventListener("keydown", handlePopupEscape);
+  document.addEventListener("keydown", handlePopupEscape);
   popup.classList.add("popup_visible");
 }
 //функция закрытия попапа
 function closePopupWindow(popup) {
   popup.removeEventListener("click", handlePopupClose);
-  popup.removeEventListener("keydown", handlePopupEscape);
+  document.removeEventListener("keydown", handlePopupEscape);
   popup.classList.remove("popup_visible");
 }
 //обработчики элементов карточки
