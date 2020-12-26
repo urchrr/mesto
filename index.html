@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="проектная работа 4" />
+  <meta name="description" content="проектная работа 6" />
   <meta name="author" content="urchrr" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./pages/index.css" />
@@ -51,17 +51,39 @@
     <div class="popup popup_profile">
       <div class="popup__window">
         <button type="button" class="popup__close-button page__button"></button>
-        <form class="popup__form" name="edit_profile" id="edit_profile">
-          <h2 class="popup__heading page__font page__font_weight_headings">
-            Редактировать профиль
-          </h2>
+        <h2 class="popup__heading page__font page__font_weight_headings">
+          Редактировать профиль
+        </h2>
+        <form class="popup__form popup__form_add" name="edit_profile" id="edit_profile">
           <fieldset class="popup__fieldset">
-            <input class="popup__input popup__input_type_name page__font page__font_weight_normal" type="text"
-              name="profile_name" />
-            <input class="popup__input popup__input_type_subname page__font page__font_weight_normal" type="text"
-              name="profile_subname" />
+            <input
+              class="popup__input popup__input_type_name page__font page__font_weight_normal"
+              type="text"
+              name="profile_name"
+              minlength="2"
+              maxlength="40"
+              required
+              placeholder="Имя"
+              autocomplete="off"
+              id="name-profile"
+              novalidate
+            />
+            <span id="name-profile-error" class="error page__font page__font_weight_normal"></span>
+            <input
+              class="popup__input popup__input_type_subname page__font page__font_weight_normal"
+              type="text"
+              name="profile_subname"
+              required
+              minlength="2"
+              maxlength="200"
+              placeholder="О себе"
+              autocomplete="off"
+              novalidate
+              id="subame-profile"
+            />
+            <span id="subame-profile-error" class="error page__font page__font_weight_normal"></span>
           </fieldset>
-          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit" name="submit">
             Сохранить
           </button>
         </form>
@@ -71,17 +93,36 @@
     <div class="popup popup_element">
       <div class="popup__window">
         <button type="button" class="popup__close-button page__button"></button>
+        <h2 class="popup__heading page__font page__font_weight_headings">
+          Новое место
+        </h2>
         <form class="popup__form" name="add_element" id="add_element">
-          <h2 class="popup__heading page__font page__font_weight_headings">
-            Новое место
-          </h2>
           <fieldset class="popup__fieldset">
-            <input class="popup__input popup__input_type_elem-title page__font page__font_weight_normal" type="text"
-              name="element_title" placeholder="Название" />
-            <input class="popup__input popup__input_type_elem-image page__font page__font_weight_normal" type="text"
-              name="element_photo" placeholder="Ссылка на картинку" />
+            <input
+              id="name-card"
+              class="popup__input popup__input_type_elem-title page__font page__font_weight_normal"
+              type="text"
+              name="element_title"
+              minlength="2"
+              maxlength="30"
+              required
+              placeholder="Название"
+              autocomplete="off"
+              novalidate
+            />
+            <span id="name-card-error" class="error page__font page__font_weight_normal"></span>
+            <input
+              id="url-card"
+              class="popup__input popup__input_type_elem-image page__font page__font_weight_normal"
+              type="url"
+              name="element_photo"
+              required
+              placeholder="Ссылка на картинку"
+              novalidate
+            />
+            <span id="url-card-error" class="error page__font page__font_weight_normal"></span>
           </fieldset>
-          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit">
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit" name="submit">
             Создать
           </button>
         </form>
@@ -103,6 +144,7 @@
     </footer>
   </div>
   <script src="./script/initial-cards.js"></script>
+  <script src="./script/validate.js"></script>
   <script src="./script/index.js"></script>
 </body>
 
