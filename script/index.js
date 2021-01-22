@@ -1,3 +1,6 @@
+import {Validate} from './valid_class.js'
+import {initialCards} from './initial-cards.js'
+import {Card} from './card.js'
 /* Объявление переменных*/
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileAddElementButton = document.querySelector(
@@ -33,6 +36,20 @@ const elementTemplate = document.querySelector("#element").content;
 const formAddElement = document.querySelector("#add_element");
 const formEditProfile = document.querySelector("#edit_profile");
 
+const validationConfig = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inputInvalidClass: 'popup__input_state_invalid',
+  buttonInvalidClass: 'popup__submit_invalid',
+};
+
+//валидация формы добавления элемента
+const formAddElementValidation = new Validate(validationConfig, formAddElement);
+formAddElementValidation.enableValidation();
+//валидация формы редактирования профиля
+const formEditProfileValidation = new Validate(validationConfig, formEditProfile);
+formEditProfileValidation.enableValidation();
+
 function handlePopupClose(evt) {
   if (evt.target === evt.currentTarget) {
     closePopupWindow(evt.currentTarget);
@@ -46,7 +63,7 @@ function handlePopupEscape(evt) {
 }
 //функция открытия попапа
 function openPopupWindow(popup) {
-  console.log(popup.firstElementChild);
+  //console.log(popup.firstElementChild);
   popup.addEventListener("click", handlePopupClose);
   document.addEventListener("keydown", handlePopupEscape);
   popup.classList.add("popup_visible");
@@ -122,11 +139,7 @@ function handleSubmitEditPopupWindow(evt) {
 }
 
 function handleProfileAddButton() {
-  setButtonState(
-    formAddElement.elements.submit,
-    formAddElement.checkValidity(),
-    validationConfig
-  );
+  formAddElementValidation.setButtonState();
   openPopupWindow(popupAddElement);
 }
 
@@ -153,6 +166,28 @@ profileAddElementButton.addEventListener("click", handleProfileAddButton);
 formEditProfile.addEventListener("submit", handleSubmitEditPopupWindow);
 formAddElement.addEventListener("submit", handleSubmitAddPopupWindow);
 /*рендер заготовленных карточек*/
-initialCards.forEach((elem) =>
-  addElement(elements, getElementCard(elem, elementTemplate))
+//initialCards.forEach((elem) =>
+//  addElement(elements, getElementCard(elem, elementTemplate))
+//);
+
+const cardConfig = {
+  popup: '.popup_element-view',
+  popupImage: '.popup__image',
+  popupFigure: '.popup__figure',
+  elementLikeButtonActive: 'element__like-button_active',
+  elementImage: '.element__image',
+  elementTitle: '.element__title',
+  elementDeleteButton: '.element__delete-button',
+  elementLikeButton: '.element__like-button',
+  element:'element',
+  link:'',
+  name:'',
+}
+
+initialCards.forEach((elem) => {
+  cardConfig.name = elem.name;
+  cardConfig.link = elem.link;
+  const card = new Card(cardConfig, handleImage)
+  addElement(elements, card.getElementCard())
+}
 );
