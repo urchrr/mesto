@@ -1,6 +1,7 @@
 import {Validate} from './valid_class.js'
 import {initialCards} from './initial-cards.js'
 import {Card} from './card.js'
+import {openPopupWindow, closePopupWindow} from './utils.js'
 /* Объявление переменных*/
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileAddElementButton = document.querySelector(
@@ -50,38 +51,22 @@ formAddElementValidation.enableValidation();
 const formEditProfileValidation = new Validate(validationConfig, formEditProfile);
 formEditProfileValidation.enableValidation();
 
-function handlePopupClose(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopupWindow(evt.currentTarget);
-  }
+const cardConfig = {
+  popup: '.popup_element-view',
+  popupImage: '.popup__image',
+  popupFigure: '.popup__figure',
+  elementLikeButtonActive: 'element__like-button_active',
+  elementImage: '.element__image',
+  elementTitle: '.element__title',
+  elementDeleteButton: '.element__delete-button',
+  elementLikeButton: '.element__like-button',
+  element:'element',
+  link:'',
+  name:'',
 }
 
-function handlePopupEscape(evt) {
-  if (evt.key === "Escape") {
-    closePopupWindow(document.querySelector('.popup_visible'));
-  }
-}
-//функция открытия попапа
-function openPopupWindow(popup) {
-  //console.log(popup.firstElementChild);
-  popup.addEventListener("click", handlePopupClose);
-  document.addEventListener("keydown", handlePopupEscape);
-  popup.classList.add("popup_visible");
-}
-//функция закрытия попапа
-function closePopupWindow(popup) {
-  popup.removeEventListener("click", handlePopupClose);
-  document.removeEventListener("keydown", handlePopupEscape);
-  popup.classList.remove("popup_visible");
-}
-//обработчики элементов карточки
-function handleLikeButton(evt) {
-  evt.target.classList.toggle("element__like-button_active");
-}
+/* Функция добавления карточки*/
 
-function handleDeleteButton(evt) {
-  evt.target.closest(".element").remove();
-}
 
 function handleImage(imageData) {
   popupImage.src = imageData.link;
@@ -89,36 +74,10 @@ function handleImage(imageData) {
   popupFigure.textContent = imageData.name;
   openPopupWindow(popupElementView);
 }
-//функция получения новой карточки
-function getElementCard(imageData, template) {
-  //склонировали шаблон в новую карточку
-  const newElement = template.cloneNode(true);
-  //выбираем элементы карточки
-  const elementImage = newElement.querySelector(".element__image");
-  const elementTitle = newElement.querySelector(".element__title");
-  const elementDeleteButton = newElement.querySelector(
-    ".element__delete-button"
-  );
-  const elementLikeButton = newElement.querySelector(".element__like-button");
-  //записываем источник изображения
-  elementImage.src = imageData.link;
-  //записываем alt изображения из названия карточки
-  elementImage.alt = imageData.name;
-  //записываем название карточки
-  elementTitle.textContent = imageData.name;
-  //обработчики
-  elementDeleteButton.addEventListener("click", handleDeleteButton);
-  //где some_data объект с данными
-  elementImage.addEventListener("click", () => {
-    handleImage(imageData);
-  });
-  elementLikeButton.addEventListener("click", handleLikeButton);
-  //возвращаем готовую карточку
-  return newElement;
-}
-/* Функция добавления карточки*/
-function addElement(container, card) {
-  container.prepend(card);
+
+function addElement(container) {
+  const card = new Card(cardConfig, handleImage);
+  container.prepend(card.getElementCard());
 }
 
 function handleProfileEditButton() {
@@ -143,15 +102,12 @@ function handleProfileAddButton() {
   openPopupWindow(popupAddElement);
 }
 
+
 function handleSubmitAddPopupWindow(evt) {
   evt.preventDefault();
-  addElement(
-    elements,
-    getElementCard(
-      { name: popupElemTitleInput.value, link: popupElemImageInput.value },
-      elementTemplate
-    )
-  );
+  cardConfig.name = popupElemTitleInput.value;
+  cardConfig.link = popupElemImageInput.value;
+  addElement(elements);
   closePopupWindow(popupAddElement);
   formAddElement.reset();
 }
@@ -165,29 +121,11 @@ profileEditButton.addEventListener("click", handleProfileEditButton);
 profileAddElementButton.addEventListener("click", handleProfileAddButton);
 formEditProfile.addEventListener("submit", handleSubmitEditPopupWindow);
 formAddElement.addEventListener("submit", handleSubmitAddPopupWindow);
+
 /*рендер заготовленных карточек*/
-//initialCards.forEach((elem) =>
-//  addElement(elements, getElementCard(elem, elementTemplate))
-//);
-
-const cardConfig = {
-  popup: '.popup_element-view',
-  popupImage: '.popup__image',
-  popupFigure: '.popup__figure',
-  elementLikeButtonActive: 'element__like-button_active',
-  elementImage: '.element__image',
-  elementTitle: '.element__title',
-  elementDeleteButton: '.element__delete-button',
-  elementLikeButton: '.element__like-button',
-  element:'element',
-  link:'',
-  name:'',
-}
-
 initialCards.forEach((elem) => {
   cardConfig.name = elem.name;
   cardConfig.link = elem.link;
-  const card = new Card(cardConfig, handleImage)
-  addElement(elements, card.getElementCard())
+  addElement(elements);
 }
 );

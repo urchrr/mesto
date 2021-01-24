@@ -4,21 +4,22 @@ export class Card {
     this._element = config.element;
     this._link = config.link;
     this._name = config.name;
-    this._popup = document.querySelector(config.popup);
-    this._popupImage = this._popup.querySelector(config.popupImage);
-    this._popupFigure = this._popup.querySelector(config.popupFigure);
-    this._elementLikeButtonActive = config.elementLikeButtonActive;
-    this._elementImage = config.elementImage;
-    this._elementTitle = config.elementTitle;
-    this._elementDeleteButton = config.elementDeleteButton;
-    this._elementLikeButton = config.elementLikeButton;
+
+    this._elementSelectorLikeButtonActive = config.elementLikeButtonActive;
+    this._elementSelectorImage = config.elementImage;
+    this._elementSelectorTitle = config.elementTitle;
+    this._elementSelectorDeleteButton = config.elementDeleteButton;
+    this._elementSelectorLikeButton = config.elementLikeButton;
     this._handleImage = handleImage;
     this._currentCard = null;
+
+    this._handleDeleteButton = this._handleDeleteButton.bind(this);
+    this._handleLikeButton = this._handleLikeButton.bind(this);
   }
 
   //обработчики элементов карточки
   _handleLikeButton(evt) {
-    evt.target.classList.toggle(this._elementLikeButtonActive);
+    evt.target.classList.toggle(this._elementSelectorLikeButtonActive);
   }
 
   _handleDeleteButton(evt) {
@@ -26,51 +27,55 @@ export class Card {
     this._removeListeners();
     this._currentCard.remove();
   }
+
   _removeListeners() {
     this._currentCard
-      .querySelector(this._elementDeleteButton)
+      .querySelector(this._elementSelectorDeleteButton)
       .removeEventListener("click", this._handleDeleteButton);
     this._currentCard
-      .querySelector(this._elementImage)
+      .querySelector(this._elementSelectorImage)
       .removeEventListener("click", this._handleImage);
     this._currentCard
-      .querySelector(this._elementLikeButton)
+      .querySelector(this._elementSelectorLikeButton)
       .removeEventListener("click", this._handleLikeButton);
+  }
+
+  //обработчики
+  _addListeners() {
+    this._newElementDeleteButton.addEventListener(
+      "click",
+      this._handleDeleteButton
+    );
+    //где some_data объект с данными
+    this._newElementImage.addEventListener("click", () =>
+      this._handleImage({ link: this._link, name: this._name })
+    );
+    this._newElementLikeButton.addEventListener(
+      "click",
+      this._handleLikeButton
+    );
   }
 
   //функция получения новой карточки
   getElementCard() {
-    console.log(this._element);
     //склонировали шаблон в новую карточку
-    const newElement = this._template.cloneNode(true);
+    this._newElement = this._template.cloneNode(true);
     //выбираем элементы карточки
-    const elementImage = newElement.querySelector(this._elementImage);
-    const elementTitle = newElement.querySelector(this._elementTitle);
-    const elementDeleteButton = newElement.querySelector(
-      this._elementDeleteButton
+    this._newElementImage = this._newElement.querySelector(this._elementSelectorImage);
+    this._newElementTitle = this._newElement.querySelector(this._elementSelectorTitle);
+    this._newElementDeleteButton = this._newElement.querySelector(
+      this._elementSelectorDeleteButton
     );
-    const elementLikeButton = newElement.querySelector(this._elementLikeButton);
+    this._newElementLikeButton = this._newElement.querySelector(this._elementSelectorLikeButton);
     //записываем источник изображения
-    elementImage.src = this._link;
+    this._newElementImage.src = this._link;
     //записываем alt изображения из названия карточки
-    elementImage.alt = this._name;
+    this._newElementImage.alt = this._name;
     //записываем название карточки
-    elementTitle.textContent = this._name;
-    //обработчики
-    elementDeleteButton.addEventListener(
-      "click",
-      this._handleDeleteButton.bind(this)
-    );
-    //где some_data объект с данными
-    elementImage.addEventListener("click", () =>
-      this._handleImage({ link: this._link, name: this._name })
-    );
+    this._newElementTitle.textContent = this._name;
 
-    elementLikeButton.addEventListener(
-      "click",
-      this._handleLikeButton.bind(this)
-    );
+    this._addListeners();
     //возвращаем готовую карточку
-    return newElement;
+    return this._newElement;
   }
 }

@@ -1,10 +1,10 @@
-export function handlePopupClose(evt) {
+function handlePopupClose(evt) {
   if (evt.target === evt.currentTarget) {
     closePopupWindow(evt.currentTarget);
   }
 }
 
-export function handlePopupEscape(evt) {
+function handlePopupEscape(evt) {
   if (evt.key === "Escape") {
     closePopupWindow(document.querySelector('.popup_visible'));
   }
