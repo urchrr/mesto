@@ -31,3 +31,10 @@
 - [JS]
 
 Подключен [webpack]
+Установка зависимостей:
+
+* npm i webpack webpack-cli jquery webpack-dev-server  html-webpack-plugin clean-webpack-plugin @babel/core @babel/preset-env babel-loader rimraf mini-css-extract-plugin cssnano autoprefixer postcss-loader css-loader --save-dev
+
+* npm i core-js --save
+
+Запуск: npm run build
