@@ -1,4 +1,4 @@
-export class Card {
+export default class Card {
   constructor(config, handleImage) {
     this._template = document.querySelector(`#${config.element}`).content;
     this._element = config.element;

@@ -1,5 +1,5 @@
-export class Validate{
-  constructor(config, form){
+export default class Validate {
+  constructor(config, form) {
     this._config = config;
     this._form = form;
     this._submitButton = this._form.querySelector(config.submitButtonSelector);
@@ -16,15 +16,15 @@ export class Validate{
   //скрыть ощибку
   _hideError(input) {
     const error = this._form.querySelector(`#${input.id}-error`);
-    error.textContent = '';
+    error.textContent = "";
     input.classList.remove(this._inputInvalidClass);
   }
   //триггер валидации инпута
   _checkInputValidity(input) {
     if (!input.validity.valid) {
-        this._showError(input);
+      this._showError(input);
     } else {
-        this._hideError(input);
+      this._hideError(input);
     }
   }
   //функция проверки состояния сабмита
@@ -39,30 +39,21 @@ export class Validate{
   }
   //функция добавления слушателей на каждый элемент формы
   _setEventListeners() {
-
     this._inputsList.forEach((input) => {
-        input.addEventListener('input', () => {
-            this._checkInputValidity(input);
-            this.setButtonState();
-        });
+      input.addEventListener("input", () => {
+        this._checkInputValidity(input);
+        this.setButtonState();
+      });
     });
   }
   //запуск валидации
   enableValidation() {
-    this._setEventListeners()
-        //setEventListeners(form, this._config);
-    this._form.addEventListener('submit', (evt) => {
-        evt.preventDefault();
+    this._setEventListeners();
+    //setEventListeners(form, this._config);
+    this._form.addEventListener("submit", (evt) => {
+      evt.preventDefault();
     });
-    this.setButtonState()
-    ;
+    this.setButtonState();
   }
 }
 //параметры
-
-
-
-
-
-
-

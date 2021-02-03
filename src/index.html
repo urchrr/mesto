@@ -6,21 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="проектная работа 6" />
   <meta name="author" content="urchrr" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="./pages/index.css" />
+  <link rel="icon" href="<%='./favicon.ico'%>" type="image/x-icon" />
+  <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
   <title>Место</title>
 </head>
 
 <body>
   <div class="page">
     <header class="header page__section">
-      <img class="header__logo" src="images/logo.svg" alt="Логотип 'Место'" />
+      <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип 'Место'" />
     </header>
 
     <main class="content">
       <section class="profile page__section">
         <div class="profile__wrapper">
-          <img src="./images/avatar.png" class="profile__photo" alt="Фото профиля" />
+          <img src="<%=require('./images/avatar.png')%>" class="profile__photo" alt="Фото профиля" />
           <div class="profile__info">
             <div class="profile__info-wrapper">
               <h1 class="profile__title page__font page__font_weight_bold page__text-overflow">Жак-Ив Кусто</h1>
@@ -143,9 +143,6 @@
       </p>
     </footer>
   </div>
-  <script type="module" src="./script/initial-cards.js"></script>
-  <!-- <script src="./script/validate.js"></script> -->
-  <script type="module" src="./script/index.js"></script>
 </body>
 
 </html>
