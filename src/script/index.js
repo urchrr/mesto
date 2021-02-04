@@ -77,8 +77,8 @@ const userInfo = new UserInfo({
   userInfoSelector: ".profile__subtitle",
 });
 
-function handleImage() {
-  popupView.open(cardConfig);
+function handleImage({link , name}) {
+  popupView.open({link: link, name: name});
 }
 
 function handleProfileEditButton() {
