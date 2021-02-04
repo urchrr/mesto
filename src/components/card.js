@@ -11,6 +11,7 @@ export default class Card {
     this._elementSelectorDeleteButton = config.elementDeleteButton;
     this._elementSelectorLikeButton = config.elementLikeButton;
     this._handleImage = handleImage;
+    this._handleImage = this._handleImage.bind(this)
     this._currentCard = null;
 
     this._handleDeleteButton = this._handleDeleteButton.bind(this);
@@ -24,20 +25,8 @@ export default class Card {
 
   _handleDeleteButton(evt) {
     this._currentCard = evt.target.closest(`.${this._element}`);
-    this._removeListeners();
+    //удаляет карточку вместе с обработчиками
     this._currentCard.remove();
-  }
-
-  _removeListeners() {
-    this._currentCard
-      .querySelector(this._elementSelectorDeleteButton)
-      .removeEventListener("click", this._handleDeleteButton);
-    this._currentCard
-      .querySelector(this._elementSelectorImage)
-      .removeEventListener("click", this._handleImage);
-    this._currentCard
-      .querySelector(this._elementSelectorLikeButton)
-      .removeEventListener("click", this._handleLikeButton);
   }
 
   //обработчики
@@ -46,10 +35,8 @@ export default class Card {
       "click",
       this._handleDeleteButton
     );
-    //где some_data объект с данными
     this._newElementImage.addEventListener("click", () =>
-      this._handleImage({ link: this._link, name: this._name })
-    );
+      this._handleImage({ link: this._link, name: this._name }));
     this._newElementLikeButton.addEventListener(
       "click",
       this._handleLikeButton
@@ -61,12 +48,18 @@ export default class Card {
     //склонировали шаблон в новую карточку
     this._newElement = this._template.cloneNode(true);
     //выбираем элементы карточки
-    this._newElementImage = this._newElement.querySelector(this._elementSelectorImage);
-    this._newElementTitle = this._newElement.querySelector(this._elementSelectorTitle);
+    this._newElementImage = this._newElement.querySelector(
+      this._elementSelectorImage
+    );
+    this._newElementTitle = this._newElement.querySelector(
+      this._elementSelectorTitle
+    );
     this._newElementDeleteButton = this._newElement.querySelector(
       this._elementSelectorDeleteButton
     );
-    this._newElementLikeButton = this._newElement.querySelector(this._elementSelectorLikeButton);
+    this._newElementLikeButton = this._newElement.querySelector(
+      this._elementSelectorLikeButton
+    );
     //записываем источник изображения
     this._newElementImage.src = this._link;
     //записываем alt изображения из названия карточки

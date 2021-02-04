@@ -20,18 +20,16 @@ export default class Popup {
   }
 
   open() {
-    this._popup.addEventListener("click", (evt) => this._handleClose(evt));
-    document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
     this._popup.classList.add("popup_visible");
   }
 
   close() {
-    this._popup.removeEventListener("click", this._handleClose);
-    document.removeEventListener("keydown", this._handleEscClose);
     this._popup.classList.remove("popup_visible");
   }
   //добавляет слушатель клика икоке закрытия попапа
   setEventListeners() {
+    document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
+    this._popup.addEventListener("click", (evt) => this._handleClose(evt));
     this._closeButton.addEventListener("click", this.close);
   }
 }

@@ -1,11 +1,11 @@
-import "../pages/index.css";
-import Validate from "./valid_class.js";
-import { initialCards } from "./initial_cards.js";
-import Card from "./card.js";
-import PopupWithForm from "./popupwithform.js";
-import PopupWithImage from "./popupwithimage.js";
-import Section from "./section.js";
-import UserInfo from "./userinfo.js";
+import "./index.css";
+import Validate from "../components/valid_class.js";
+import { initialCards } from "../components/initial_cards.js";
+import Card from "../components/card.js";
+import PopupWithForm from "../components/popupwithform.js";
+import PopupWithImage from "../components/popupwithimage.js";
+import Section from "../components/section.js";
+import UserInfo from "../components/userinfo.js";
 
 /* Объявление переменных*/
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -97,9 +97,9 @@ function handleSubmitEditPopupWindow(data) {
   popupEdit.close();
 }
 
-function handleSubmitAddPopupWindow() {
-  cardConfig.name = popupAdd._getInputValues().element_title;
-  cardConfig.link = popupAdd._getInputValues().element_photo;
+function handleSubmitAddPopupWindow(data) {
+  cardConfig.name = data.element_title;
+  cardConfig.link = data.element_photo;
   const newCard = new Card(cardConfig, handleImage);
   section.addItem(newCard.getElementCard());
   popupAdd.close();
