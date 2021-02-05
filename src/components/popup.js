@@ -3,6 +3,7 @@ export default class Popup {
     this._popup = document.querySelector(selector);
     this._closeButton = this._popup.querySelector(".popup__close-button");
     this.close = this.close.bind(this);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   //содержит логику закрытия по оверлею
@@ -20,15 +21,17 @@ export default class Popup {
   }
 
   open() {
+    document.addEventListener("keydown", this._handleEscClose);
     this._popup.classList.add("popup_visible");
   }
 
   close() {
+    document.removeEventListener("keydown", this._handleEscClose);
     this._popup.classList.remove("popup_visible");
   }
   //добавляет слушатель клика икоке закрытия попапа
   setEventListeners() {
-    document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
+    //document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
     this._popup.addEventListener("click", (evt) => this._handleClose(evt));
     this._closeButton.addEventListener("click", this.close);
   }
