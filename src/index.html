@@ -20,14 +20,18 @@
     <main class="content">
       <section class="profile page__section">
         <div class="profile__wrapper">
-          <img src="<%=require('./images/avatar.png')%>" class="profile__photo" alt="Фото профиля" />
+          <!-- <img src="<%=require('./images/avatar.png')%>" class="profile__photo" alt="Фото профиля" /> -->
+
+          <button class="profile__photo-edit page__button">
+            <img src="#" class="profile__photo" alt="Фото профиля" />
+          </button>
           <div class="profile__info">
             <div class="profile__info-wrapper">
-              <h1 class="profile__title page__font page__font_weight_bold page__text-overflow">Жак-Ив Кусто</h1>
+              <h1 class="profile__title page__font page__font_weight_bold page__text-overflow"></h1>
               <button class="profile__edit-button page__button" type="button"
                 aria-label="Редактирование профиля"></button>
             </div>
-            <p class="profile__subtitle page__font page__font_weight_normal page__text-overflow">Исследователь океана</p>
+            <p class="profile__subtitle page__font page__font_weight_normal page__text-overflow"></p>
           </div>
         </div>
         <button class="profile__add-element-button page__button" type="button"
@@ -37,11 +41,15 @@
       <section class="elements page__section">
         <template id="element">
           <article class="element">
-            <button class="element__delete-button page__button" type="button"></button>
+            <!-- <button class="element__delete-button page__button" type="button"></button> -->
             <img class="element__image" src="#" alt="Фото карточки-места" />
             <div class="element__info">
               <h2 class="element__title page__font page__font_weight_headings page__text-overflow"></h2>
-              <button class="element__like-button page__button" type="button"></button>
+              <div>
+                <button class="element__like-button page__button" type="button"></button>
+                <p class="element__like page__font page__font_weight_normal">1</p>
+              </div>
+
             </div>
           </article>
         </template>
@@ -59,7 +67,7 @@
             <input
               class="popup__input popup__input_type_name page__font page__font_weight_normal"
               type="text"
-              name="profile_name"
+              name="name"
               minlength="2"
               maxlength="40"
               required
@@ -72,7 +80,7 @@
             <input
               class="popup__input popup__input_type_subname page__font page__font_weight_normal"
               type="text"
-              name="profile_subname"
+              name="about"
               required
               minlength="2"
               maxlength="200"
@@ -137,6 +145,47 @@
       </figure>
     </div>
 
+    <div class="popup popup_avatar">
+      <div class="popup__window">
+        <button type="button" class="popup__close-button page__button"></button>
+        <h2 class="popup__heading page__font page__font_weight_headings">
+          Обновить аватар
+        </h2>
+        <form class="popup__form" name="edit_profile" id="edit_avatar">
+          <fieldset class="popup__fieldset">
+            <input
+              id="avatar-profile"
+              class="popup__input page__font page__font_weight_normal"
+              type="url"
+              name="avatar"
+              required
+              placeholder="Ссылка на картинку"
+              novalidate
+            />
+
+            <span id="avatar-profile-error" class="error page__font page__font_weight_normal"></span>
+          </fieldset>
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit" name="submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_delete-card">
+      <div class="popup__window">
+        <button type="button" class="popup__close-button page__button"></button>
+        <h2 class="popup__heading page__font page__font_weight_headings">
+          Вы уверены?
+        </h2>
+        <form class="popup__form popup__form_add" name="edit_profile" id="edit_profile">
+          <button class="popup__submit page__button page__font page__font_weight_normal" type="submit" name="submit">
+            Да
+          </button>
+        </form>
+      </div>
+    </div>
+
     <footer class="footer page__section">
       <p class="footer__text page__font page__font_weight_normal">
         &copy; 2020 Mesto Russia
@@ -144,5 +193,4 @@
     </footer>
   </div>
 </body>
-
 </html>

@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._handleSubmit = handleSubmit;
     this._popupForm = this._popup.querySelector(".popup__form");
     this._inputList = this._popup.querySelectorAll(".popup__input");
+    this._submitButton = this._popup.querySelector(".popup__submit");
   }
 
   //собирает данные со всех полей формы
@@ -15,10 +16,12 @@ export default class PopupWithForm extends Popup {
     this._inputList.forEach(
       (input) => (this._formValues[input.name] = input.value)
     );
-
+    // console.log(this._formValues)
     return this._formValues;
   }
-
+  setSubmitButtonState(state){
+      this._submitButton.textContent = state;
+  }
   //добавляет обработчик иконке закрытия и сабмит формы
   setEventListeners() {
     this._popupForm.addEventListener("submit", () =>
@@ -29,6 +32,8 @@ export default class PopupWithForm extends Popup {
 
   setInputValues(data) {
     this._inputList.forEach((input) => {
+      console.log('pipu')
+      console.log(data)
       input.value = data[input.name];
     });
   }

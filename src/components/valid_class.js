@@ -37,10 +37,25 @@ export default class Validate {
       this._submitButton.disabled = true;
     }
   }
+  reset(){
+    this._form.reset();
+  }
+
+  hideErrors(){
+    this._inputsList.forEach((input) => {
+      this._hideError(input);
+  });
+  }
+  checkForm(){
+    this._inputsList.forEach((input) => {
+        this._checkInputValidity(input);
+    });
+  }
   //функция добавления слушателей на каждый элемент формы
   _setEventListeners() {
     this._inputsList.forEach((input) => {
       input.addEventListener("input", () => {
+        // console.log(input.validity)
         this._checkInputValidity(input);
         this.setButtonState();
       });

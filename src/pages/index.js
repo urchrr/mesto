@@ -1,117 +1,118 @@
 import "./index.css";
-import Validate from "../components/valid_class.js";
-import { initialCards } from "../components/initial_cards.js";
+
+import * as cs from "../components/constants.js";
 import Card from "../components/card.js";
+import Section from "../components/section.js";
 import PopupWithForm from "../components/popupwithform.js";
 import PopupWithImage from "../components/popupwithimage.js";
-import Section from "../components/section.js";
-import UserInfo from "../components/userinfo.js";
+import PopupWithSubmit from "../components/popupwithsubmit";
 
-/* Объявление переменных*/
-const profileEditButton = document.querySelector(".profile__edit-button");
-const profileAddElementButton = document.querySelector(
-  ".profile__add-element-button"
-);
-const formAddElement = document.querySelector("#add_element");
-const formEditProfile = document.querySelector("#edit_profile");
+cs.formAddElementValidation.enableValidation();
+cs.formEditProfileValidation.enableValidation();
+cs.formEditAvatarValidation.enableValidation();
 
-const validationConfig = {
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__submit",
-  inputInvalidClass: "popup__input_state_invalid",
-  buttonInvalidClass: "popup__submit_invalid",
-};
-
-//валидация формы добавления элемента
-const formAddElementValidation = new Validate(validationConfig, formAddElement);
-formAddElementValidation.enableValidation();
-//валидация формы редактирования профиля
-const formEditProfileValidation = new Validate(
-  validationConfig,
-  formEditProfile
-);
-formEditProfileValidation.enableValidation();
-
-const cardConfig = {
-  popup: ".popup_element-view",
-  popupImage: ".popup__image",
-  popupFigure: ".popup__figure",
-  elementLikeButtonActive: "element__like-button_active",
-  elementImage: ".element__image",
-  elementTitle: ".element__title",
-  elementDeleteButton: ".element__delete-button",
-  elementLikeButton: ".element__like-button",
-  element: "element",
-  link: "",
-  name: "",
-};
-
-const popupAdd = new PopupWithForm(
-  ".popup_element",
-  handleSubmitAddPopupWindow
-);
-
-const popupEdit = new PopupWithForm(
-  ".popup_profile",
-  handleSubmitEditPopupWindow
-);
-
-const popupView = new PopupWithImage(".popup_element-view");
-
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: function f(item) {
-      cardConfig.link = item.link;
-      cardConfig.name = item.name;
-      const cardTT = new Card(cardConfig, handleImage);
-      section.addItem(cardTT.getElementCard());
-    },
-  },
-  ".elements"
-);
-//отрисовка блока страницы с карточками
-
-const userInfo = new UserInfo({
-  userNameSelector: ".profile__title",
-  userInfoSelector: ".profile__subtitle",
+cs.api.getUserInfoPromise().then((res) => {
+  // console.log(res);
+  cs.setUserInfo(res);
 });
 
-function handleImage({link , name}) {
-  popupView.open({link: link, name: name});
-}
+cs.api.getInitialCardsPromise().then((res) => {
+  const popupAdd = new PopupWithForm(".popup_element", handleSubmitAddCard);
+  const popupView = new PopupWithImage(".popup_element-view");
+  const popupDeleteCard = new PopupWithSubmit(
+    ".popup_delete-card",
+    handleDeleteSubmitCard
+  );
+  const section = new Section(
+    {
+      items: res,
+      renderer: function f(item) {
+        cs.cardConfig.elementData = {
+          link: item.link,
+          name: item.name,
+          ownerId: item.owner._id,
+          userId: cs.userInfo.getUserId(),
+          likes: item.likes,
+          id: item._id,
+        };
+        // console.log(cardConfig)
+        const cardTT = new Card(
+          cs.cardConfig,
+          {
+            handleImage: handleCardImage,
+            handleDelete: handlePopupDelete,
+            handleLike: handleLike,
+          },
+          cs.api
+        );
+        section.addItem(cardTT.getElementCard());
+      },
+    },
+    ".elements"
+  );
 
-function handleProfileEditButton() {
-  /*приводим значения полей ввода профиля в актуальное состояние*/
-  popupEdit.setInputValues(userInfo.getUserInfo());
-  popupEdit.open();
-}
+  function handleCardImage({ link, name }) {
+    popupView.open({ link: link, name: name });
+  }
 
-function handleProfileAddButton() {
-  formAddElementValidation.setButtonState();
-  popupAdd.open();
-}
+  function handleDeleteSubmitCard(data) {
+    popupDeleteCard.setSubmitButtonState("Удаляем...");
+    cs.api.deleteCard(data.id).then((res) => {
+      console.log(res);
+      data.card.remove();
+    });
+    popupDeleteCard.close();
+    popupDeleteCard.setSubmitButtonState("Да");
+  }
 
-function handleSubmitEditPopupWindow(data) {
-  userInfo.setUserInfo(data);
-  popupEdit.close();
-}
+  function handlePopupDelete(id, card) {
+    popupDeleteCard.open({ id: id, card: card });
+  }
+  function handleLike(bool, idCard) {
+    //если лайк стоит
+    if (bool) {
+    } else {
+      //если лайка нет
+    }
+  }
 
-function handleSubmitAddPopupWindow(data) {
-  cardConfig.name = data.element_title;
-  cardConfig.link = data.element_photo;
-  const newCard = new Card(cardConfig, handleImage);
-  section.addItem(newCard.getElementCard());
-  popupAdd.close();
-}
+  function handleSubmitAddCard(data) {
+    cs.api
+      .addNewCardPromise({ name: data.element_title, link: data.element_photo })
+      .then((res) => {
+        cs.cardConfig.elementData = {
+          link: res.link,
+          name: res.name,
+          ownerId: res.owner._id,
+          userId: cs.userInfo.getUserId(),
+          likes: res.likes,
+          createdAt: res.createdAt,
+        };
+        console.log(cs.cardConfig.elementData);
+        const newCard = new Card(
+          cs.cardConfig,
+          {
+            handleImage: handleCardImage,
+            handleDelete: handlePopupDelete,
+            handleLike: handleLike,
+          },
+          cs.api
+        );
+        section.addItem(newCard.getElementCard());
+        popupAdd.close();
+      });
+  }
 
-function startPage() {
-  profileEditButton.addEventListener("click", handleProfileEditButton);
-  profileAddElementButton.addEventListener("click", handleProfileAddButton);
+  function handleAddCard() {
+    cs.formAddElementValidation.hideErrors();
+    cs.formAddElementValidation.setButtonState();
+    popupAdd.open();
+  }
+
+  cs.startPage();
+  cs.profileAddElementButton.addEventListener("click", handleAddCard);
+  popupDeleteCard.setEventListeners();
   popupAdd.setEventListeners();
-  popupEdit.setEventListeners();
   popupView.setEventListeners();
   section.render();
-}
-
-startPage();
+});
