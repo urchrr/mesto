@@ -12,21 +12,10 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
-  getUserInfo = (callback) =>{
-    return fetch(this._baseUrl+'/users/me',{
-      headers: this._headers,
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(res => callback(res))
-    .catch(err => console.log(err));
-  }
 
   getInitialCardsPromise() {
     return fetch(this._baseUrl+'/cards', {
@@ -36,6 +25,7 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
@@ -52,6 +42,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -66,6 +57,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Ошибка: ${res.status}`);
     })
   }
 
@@ -80,6 +72,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Ошибка: ${res.status}`);
     })
   }
 
