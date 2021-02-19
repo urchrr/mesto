@@ -44,7 +44,6 @@ cs.api.getInitialCardsPromise()
                 {
                   handleImage: handleCardImage,
                   handleDelete: handlePopupDelete,
-                  handleLike: handleLike,
                 },
                 cs.api
               );
@@ -92,7 +91,6 @@ cs.api.getInitialCardsPromise()
                 {
                   handleImage: handleCardImage,
                   handleDelete: handlePopupDelete,
-                  handleLike: handleLike,
                 },
                 cs.api
               );
