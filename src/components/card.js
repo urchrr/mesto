@@ -52,6 +52,7 @@ export default class Card {
         ).textContent = res.likes.length
         this._currentButton.classList.add(this._elementSelectorLikeButtonActive)
       })
+      .catch(err => console.log(err));
     }
     else {
       this._api.deleteLike(this._id).then(res =>{
@@ -61,6 +62,7 @@ export default class Card {
         ).textContent = res.likes.length
         this._currentButton.classList.remove(this._elementSelectorLikeButtonActive)
       })
+      .catch(err => console.log(err));
     }
   }
 
